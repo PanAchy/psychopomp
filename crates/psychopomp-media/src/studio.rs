@@ -15,9 +15,12 @@ use psychopomp::transcript::WordTiming;
 
 use crate::{
     eleven, ffmpeg, fish,
-    spec::{Backend, PROVIDER_ALIGN, Spec, SpeechSpec, WHISPER},
+    spec::{Backend, ESTIMATE_ALIGN, PROVIDER_ALIGN, Spec, SpeechSpec, WHISPER},
     words,
 };
+
+/// The local Pocket TTS server.
+const POCKET_TTS_URL: &str = "http://127.0.0.1:8000";
 
 /// One resource to produce.
 pub(crate) struct Job<'a> {
@@ -107,16 +110,49 @@ impl Studio {
                 ]))?;
                 (raw, None, Vec::new(), None)
             }
+            Backend::Pocket => {
+                // The endpoint is machine-local, so it is not part of the key.
+                let base = env::var("POCKET_TTS_URL").unwrap_or_else(|_| POCKET_TTS_URL.to_owned());
+                let url = format!("{}/tts", base.trim_end_matches('/'));
+                let line = &speech.lines[0];
+                let mut response = self
+                    .agent()
+                    .post(&url)
+                    .send_form([("text", speech.text()), ("voice", line.voice.clone())])
+                    .with_context(|| {
+                        format!(
+                            "Pocket TTS is not answering at {url}; start it with `pocket-tts serve`"
+                        )
+                    })?;
+                let status = response.status().as_u16();
+                let audio = response
+                    .body_mut()
+                    .with_config()
+                    .limit(256 << 20)
+                    .read_to_vec()
+                    .with_context(|| format!("read the Pocket TTS response from {url}"))?;
+                if !(200..300).contains(&status) {
+                    bail!("Pocket TTS HTTP {status} at {url}");
+                }
+                let raw = work.path("raw.wav");
+                fs::write(&raw, audio)?;
+                (raw, None, Vec::new(), None)
+            }
         };
         let finished = work.path("speech.mp3");
         ffmpeg::loudness(&raw, &finished)?;
         let duration = ffmpeg::duration(&finished)?;
         let words = match alignment {
             Some(alignment) if speech.align == PROVIDER_ALIGN => words::from_alignment(&alignment),
+            // Pocket TTS returns no timings, and `whisper` shells out to an
+            // Apple-only helper, so estimate from the text and fit the audio.
+            _ if speech.align == ESTIMATE_ALIGN => {
+                words::clamped(words::estimate(&speech.text()).0, duration)
+            }
             _ => whisper(&finished, work)?,
         };
         install(&finished, out)?;
-        let api_calls = u32::from(speech.backend != Backend::Say);
+        let api_calls = u32::from(speech.paid());
         Ok(Generated {
             duration,
             words,

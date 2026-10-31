@@ -25,6 +25,7 @@ pub const SAY_DEFAULT: &str = "Samantha";
 pub(crate) const ELEVEN_FORMAT: &str = "mp3_44100_192";
 pub(crate) const FISH_FORMAT: &str = "wav_44100";
 pub(crate) const SAY_FORMAT: &str = "wav_48000";
+pub(crate) const POCKET_FORMAT: &str = "wav";
 /// Post-processing is part of the key: change the code, change the string.
 pub(crate) const SPEECH_POST: &str = "loudnorm=I=-16:TP=-1.5:LRA=11|mp3=48000:mono:160k";
 pub(crate) const SOUND_POST: &str =
@@ -32,6 +33,7 @@ pub(crate) const SOUND_POST: &str =
 pub(crate) const SILENCE_POST: &str = "wav=48000:mono:s16";
 pub(crate) const DERIVE_POST: &str = "ffmpeg-effect/1";
 pub(crate) const PROVIDER_ALIGN: &str = "provider";
+pub(crate) const ESTIMATE_ALIGN: &str = "estimate";
 
 /// Bumped only when the canonical form itself changes, which rekeys everything.
 const KEY_SCHEMA: &str = "psychopomp-media/1";
@@ -44,6 +46,8 @@ pub enum Backend {
     Fish,
     /// macOS `say`: free, local drafts for timing a scene.
     Say,
+    /// The local Kyutai Pocket TTS server.
+    Pocket,
 }
 
 impl Backend {
@@ -52,6 +56,7 @@ impl Backend {
             Self::ElevenLabs => "ElevenLabs",
             Self::Fish => "Fish Audio",
             Self::Say => "say",
+            Self::Pocket => "Pocket TTS",
         }
     }
 }
@@ -125,6 +130,11 @@ impl Voice {
     /// A macOS `say` voice, such as `"Samantha"`, timed by Whisper.
     pub fn say(name: impl Into<String>) -> Self {
         Self::new(Backend::Say, name, None)
+    }
+
+    /// A local Pocket TTS voice (built-in name or wav path), timed by estimate.
+    pub fn pocket(voice: impl Into<String>) -> Self {
+        Self::new(Backend::Pocket, voice, None)
     }
 
     fn new(backend: Backend, id: impl Into<String>, model: Option<&str>) -> Self {
@@ -227,6 +237,9 @@ impl Voice {
             Backend::Say if !s.is_default() || self.model.is_some() => {
                 bail!("`say` voices take only a name")
             }
+            Backend::Pocket if !s.is_default() || self.model.is_some() => {
+                bail!("Pocket TTS voices take only a name")
+            }
             _ => Ok(()),
         }
     }
@@ -251,6 +264,7 @@ impl Voice {
             Backend::ElevenLabs => (eleven, whisper_align()),
             Backend::Fish => (FISH_FORMAT, whisper_align()),
             Backend::Say => (SAY_FORMAT, whisper_align()),
+            Backend::Pocket => (POCKET_FORMAT, ESTIMATE_ALIGN.to_owned()),
         };
         Ok(SpeechSpec {
             backend: self.backend,
@@ -544,6 +558,12 @@ impl SpeechSpec {
             .collect::<Vec<_>>()
             .join(" ")
     }
+
+    /// Whether this spec calls a paid provider. `say` and Pocket TTS run
+    /// locally.
+    pub(crate) fn paid(&self) -> bool {
+        !matches!(self.backend, Backend::Say | Backend::Pocket)
+    }
 }
 
 #[derive(Clone, Debug, PartialEq, Serialize)]
@@ -614,7 +634,7 @@ impl Spec {
     /// The free local stand-in a draft run generates instead.
     pub(crate) fn draft(&self, say_voice: &str) -> Option<Spec> {
         match self {
-            Self::Speech(speech) if speech.backend != Backend::Say => {
+            Self::Speech(speech) if speech.paid() => {
                 let text = speech.text();
                 Voice::say(say_voice)
                     .speech(
@@ -639,7 +659,7 @@ impl Spec {
     /// The paid provider this spec calls, if any.
     pub(crate) fn provider(&self) -> Option<Backend> {
         match self {
-            Self::Speech(speech) if speech.backend != Backend::Say => Some(speech.backend),
+            Self::Speech(speech) if speech.paid() => Some(speech.backend),
             Self::Sound(sound) => Some(sound.backend),
             _ => None,
         }
@@ -648,7 +668,7 @@ impl Spec {
     /// Billable characters: speech text, including direction tags.
     pub(crate) fn characters(&self) -> usize {
         match self {
-            Self::Speech(speech) if speech.backend != Backend::Say => speech
+            Self::Speech(speech) if speech.paid() => speech
                 .lines
                 .iter()
                 .map(|line| line.text.chars().count())
@@ -760,6 +780,16 @@ mod tests {
         let canonical = serde_json::to_string(&plain.canonical()).unwrap();
         assert!(!canonical.contains("settings"), "{canonical}");
         assert!(!canonical.contains("previous"), "{canonical}");
+    }
+
+    #[test]
+    fn pocket_speech_is_local_and_keys_its_voice() {
+        let spec = line(&Voice::pocket("alba"), "Hi.");
+        assert_eq!(spec.provider(), None);
+        assert_eq!(spec.characters(), 0);
+        assert_eq!(spec.draft("Samantha"), None);
+        assert_eq!(spec.key(), line(&Voice::pocket("alba"), "Hi.").key());
+        assert_ne!(spec.key(), line(&Voice::pocket("other"), "Hi.").key());
     }
 
     #[test]

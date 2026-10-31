@@ -37,7 +37,7 @@ impl Generator for Fake {
         let generated = match job.spec {
             Spec::Speech(speech) => {
                 let (words, duration) = words::estimate(&speech.text());
-                let paid = speech.backend != Backend::Say;
+                let paid = speech.paid();
                 Generated {
                     duration,
                     words,
