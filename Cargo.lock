@@ -2636,6 +2636,16 @@ dependencies = [
 ]
 
 [[package]]
+name = "psychopomp-effect-ts"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "psychopomp",
+ "psychopomp-media",
+ "serde_json",
+]
+
+[[package]]
 name = "psychopomp-effects-showroom"
 version = "0.1.0"
 dependencies = [
