@@ -1,0 +1,117 @@
+{
+  "version": 1,
+  "resources": {
+    "fill": {
+      "key": "88e36e41b6d76205",
+      "file": "media/88e36e41b6d76205.mp3",
+      "durationNanos": 6919000000,
+      "spec": {
+        "align": "estimate",
+        "backend": "pocket",
+        "format": "wav",
+        "kind": "speech",
+        "lines": [{"text": "The fill step is yours. Write the value back, then decide the expiry, because that decision sets how stale a second reader can be.", "voice": "alba"}],
+        "post": "loudnorm=I=-16:TP=-1.5:LRA=11|mp3=48000:mono:160k",
+        "route": "speech"
+      },
+      "words": [
+        ["The", 0.15, 0.49],
+        ["fill", 0.55, 0.89],
+        ["step", 0.95, 1.29],
+        ["is", 1.35, 1.69],
+        ["yours.", 1.75, 2.09],
+        ["Write", 2.15, 2.49],
+        ["the", 2.55, 2.89],
+        ["value", 2.95, 3.29],
+        ["back,", 3.35, 3.69],
+        ["then", 3.75, 4.09],
+        ["decide", 4.15, 4.49],
+        ["the", 4.55, 4.89],
+        ["expiry,", 4.95, 5.29],
+        ["because", 5.35, 5.69],
+        ["that", 5.75, 6.09],
+        ["decision", 6.15, 6.49],
+        ["sets", 6.55, 6.89],
+        ["how", 6.919, 6.919],
+        ["stale", 6.919, 6.919],
+        ["a", 6.919, 6.919],
+        ["second", 6.919, 6.919],
+        ["reader", 6.919, 6.919],
+        ["can", 6.919, 6.919],
+        ["be.", 6.919, 6.919]
+      ]
+    },
+    "hit": {
+      "key": "198538451af0cf33",
+      "file": "media/198538451af0cf33.mp3",
+      "durationNanos": 6039000000,
+      "spec": {
+        "align": "estimate",
+        "backend": "pocket",
+        "format": "wav",
+        "kind": "speech",
+        "lines": [{"text": "A read goes to the cache first. On a hit, the cache answers and the database is never touched.", "voice": "alba"}],
+        "post": "loudnorm=I=-16:TP=-1.5:LRA=11|mp3=48000:mono:160k",
+        "route": "speech"
+      },
+      "words": [
+        ["A", 0.15, 0.49],
+        ["read", 0.55, 0.89],
+        ["goes", 0.95, 1.29],
+        ["to", 1.35, 1.69],
+        ["the", 1.75, 2.09],
+        ["cache", 2.15, 2.49],
+        ["first.", 2.55, 2.89],
+        ["On", 2.95, 3.29],
+        ["a", 3.35, 3.69],
+        ["hit,", 3.75, 4.09],
+        ["the", 4.15, 4.49],
+        ["cache", 4.55, 4.89],
+        ["answers", 4.95, 5.29],
+        ["and", 5.35, 5.69],
+        ["the", 5.75, 6.039],
+        ["database", 6.039, 6.039],
+        ["is", 6.039, 6.039],
+        ["never", 6.039, 6.039],
+        ["touched.", 6.039, 6.039]
+      ]
+    },
+    "miss": {
+      "key": "cdeb8796212b86cf",
+      "file": "media/cdeb8796212b86cf.mp3",
+      "durationNanos": 6359000000,
+      "spec": {
+        "align": "estimate",
+        "backend": "pocket",
+        "format": "wav",
+        "kind": "speech",
+        "lines": [{"text": "On a miss, the cache asks the database, and the answer travels back through the cache before the client sees it.", "voice": "alba"}],
+        "post": "loudnorm=I=-16:TP=-1.5:LRA=11|mp3=48000:mono:160k",
+        "route": "speech"
+      },
+      "words": [
+        ["On", 0.15, 0.49],
+        ["a", 0.55, 0.89],
+        ["miss,", 0.95, 1.29],
+        ["the", 1.35, 1.69],
+        ["cache", 1.75, 2.09],
+        ["asks", 2.15, 2.49],
+        ["the", 2.55, 2.89],
+        ["database,", 2.95, 3.29],
+        ["and", 3.35, 3.69],
+        ["the", 3.75, 4.09],
+        ["answer", 4.15, 4.49],
+        ["travels", 4.55, 4.89],
+        ["back", 4.95, 5.29],
+        ["through", 5.35, 5.69],
+        ["the", 5.75, 6.09],
+        ["cache", 6.15, 6.359],
+        ["before", 6.359, 6.359],
+        ["the", 6.359, 6.359],
+        ["client", 6.359, 6.359],
+        ["sees", 6.359, 6.359],
+        ["it.", 6.359, 6.359]
+      ]
+    }
+  }
+}
