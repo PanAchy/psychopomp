@@ -1,0 +1,619 @@
+{
+  "version": 2,
+  "id": "effect-ts-diagram",
+  "durationNanos": 9279000000,
+  "actors": [
+    {
+      "id": "stage",
+      "recipe": "stage",
+      "data": {
+        "elements": [
+          {
+            "at": [
+              420.0,
+              790.0,
+              0.0
+            ],
+            "id": "db",
+            "kind": "card",
+            "size": [
+              300.0,
+              110.0
+            ],
+            "title": "Database"
+          },
+          {
+            "at": [
+              960.0,
+              900.0,
+              0.0
+            ],
+            "id": "logger",
+            "kind": "card",
+            "size": [
+              300.0,
+              110.0
+            ],
+            "title": "Logger"
+          },
+          {
+            "at": [
+              1500.0,
+              790.0,
+              0.0
+            ],
+            "id": "clock",
+            "kind": "card",
+            "size": [
+              300.0,
+              110.0
+            ],
+            "title": "Clock"
+          },
+          {
+            "at": [
+              960.0,
+              360.0,
+              0.0
+            ],
+            "id": "program",
+            "kind": "orb",
+            "points": 720,
+            "radius": 150.0,
+            "tone": "accent"
+          },
+          {
+            "bend": 0.0,
+            "from": "program",
+            "id": "to-db",
+            "kind": "beam",
+            "to": "db"
+          },
+          {
+            "bend": 0.0,
+            "from": "program",
+            "id": "to-logger",
+            "kind": "beam",
+            "to": "logger"
+          },
+          {
+            "bend": 0.0,
+            "from": "program",
+            "id": "to-clock",
+            "kind": "beam",
+            "to": "clock"
+          },
+          {
+            "beam": "to-db",
+            "id": "ask-db",
+            "kind": "packet",
+            "label": "query"
+          },
+          {
+            "beam": "to-logger",
+            "id": "ask-logger",
+            "kind": "packet",
+            "label": "log"
+          },
+          {
+            "beam": "to-clock",
+            "id": "ask-clock",
+            "kind": "packet",
+            "label": "now"
+          }
+        ],
+        "post": {
+          "backdrop": 0.3499999940395355,
+          "bloom": 0.550000011920929,
+          "grain": 0.03500000014901161,
+          "vignette": 0.4000000059604645
+        }
+      }
+    }
+  ],
+  "semanticTargets": [],
+  "continuousChannels": [
+    {
+      "id": "stage.db.opacity",
+      "actorId": "stage",
+      "property": "db.opacity",
+      "initial": 0.0,
+      "events": [
+        {
+          "operation": "ease",
+          "atNanos": 400000000,
+          "target": 1.0,
+          "durationNanos": 500000000,
+          "curve": "smootherstep"
+        }
+      ]
+    },
+    {
+      "id": "stage.logger.opacity",
+      "actorId": "stage",
+      "property": "logger.opacity",
+      "initial": 0.0,
+      "events": [
+        {
+          "operation": "ease",
+          "atNanos": 400000000,
+          "target": 1.0,
+          "durationNanos": 500000000,
+          "curve": "smootherstep"
+        }
+      ]
+    },
+    {
+      "id": "stage.clock.opacity",
+      "actorId": "stage",
+      "property": "clock.opacity",
+      "initial": 0.0,
+      "events": [
+        {
+          "operation": "ease",
+          "atNanos": 400000000,
+          "target": 1.0,
+          "durationNanos": 500000000,
+          "curve": "smootherstep"
+        }
+      ]
+    },
+    {
+      "id": "stage.program.opacity",
+      "actorId": "stage",
+      "property": "program.opacity",
+      "initial": 0.0,
+      "events": [
+        {
+          "operation": "ease",
+          "atNanos": 400000000,
+          "target": 1.0,
+          "durationNanos": 500000000,
+          "curve": "smootherstep"
+        }
+      ]
+    },
+    {
+      "id": "stage.to-db.opacity",
+      "actorId": "stage",
+      "property": "to-db.opacity",
+      "initial": 0.0,
+      "events": [
+        {
+          "operation": "ease",
+          "atNanos": 400000000,
+          "target": 1.0,
+          "durationNanos": 500000000,
+          "curve": "smootherstep"
+        }
+      ]
+    },
+    {
+      "id": "stage.to-logger.opacity",
+      "actorId": "stage",
+      "property": "to-logger.opacity",
+      "initial": 0.0,
+      "events": [
+        {
+          "operation": "ease",
+          "atNanos": 400000000,
+          "target": 1.0,
+          "durationNanos": 500000000,
+          "curve": "smootherstep"
+        }
+      ]
+    },
+    {
+      "id": "stage.to-clock.opacity",
+      "actorId": "stage",
+      "property": "to-clock.opacity",
+      "initial": 0.0,
+      "events": [
+        {
+          "operation": "ease",
+          "atNanos": 400000000,
+          "target": 1.0,
+          "durationNanos": 500000000,
+          "curve": "smootherstep"
+        }
+      ]
+    },
+    {
+      "id": "stage.ask-db.opacity",
+      "actorId": "stage",
+      "property": "ask-db.opacity",
+      "initial": 0.0,
+      "events": [
+        {
+          "operation": "ease",
+          "atNanos": 400000000,
+          "target": 1.0,
+          "durationNanos": 500000000,
+          "curve": "smootherstep"
+        }
+      ]
+    },
+    {
+      "id": "stage.ask-logger.opacity",
+      "actorId": "stage",
+      "property": "ask-logger.opacity",
+      "initial": 0.0,
+      "events": [
+        {
+          "operation": "ease",
+          "atNanos": 400000000,
+          "target": 1.0,
+          "durationNanos": 500000000,
+          "curve": "smootherstep"
+        }
+      ]
+    },
+    {
+      "id": "stage.ask-clock.opacity",
+      "actorId": "stage",
+      "property": "ask-clock.opacity",
+      "initial": 0.0,
+      "events": [
+        {
+          "operation": "ease",
+          "atNanos": 400000000,
+          "target": 1.0,
+          "durationNanos": 500000000,
+          "curve": "smootherstep"
+        }
+      ]
+    },
+    {
+      "id": "stage.to-db.port",
+      "actorId": "stage",
+      "property": "to-db.port",
+      "initial": 0.0,
+      "events": [
+        {
+          "operation": "ease",
+          "atNanos": 1600000000,
+          "target": 1.0,
+          "durationNanos": 300000000,
+          "curve": "smootherstep"
+        }
+      ]
+    },
+    {
+      "id": "stage.to-db.draw",
+      "actorId": "stage",
+      "property": "to-db.draw",
+      "initial": 0.0,
+      "events": [
+        {
+          "operation": "set",
+          "atNanos": 1900000000,
+          "value": 0.0
+        },
+        {
+          "operation": "ease",
+          "atNanos": 1900000000,
+          "target": 1.0,
+          "durationNanos": 500000000,
+          "curve": {
+            "cubic-bezier": [
+              0.45,
+              0.0,
+              0.2,
+              1.0
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "stage.to-logger.port",
+      "actorId": "stage",
+      "property": "to-logger.port",
+      "initial": 0.0,
+      "events": [
+        {
+          "operation": "ease",
+          "atNanos": 1750000000,
+          "target": 1.0,
+          "durationNanos": 300000000,
+          "curve": "smootherstep"
+        }
+      ]
+    },
+    {
+      "id": "stage.to-logger.draw",
+      "actorId": "stage",
+      "property": "to-logger.draw",
+      "initial": 0.0,
+      "events": [
+        {
+          "operation": "set",
+          "atNanos": 2050000000,
+          "value": 0.0
+        },
+        {
+          "operation": "ease",
+          "atNanos": 2050000000,
+          "target": 1.0,
+          "durationNanos": 500000000,
+          "curve": {
+            "cubic-bezier": [
+              0.45,
+              0.0,
+              0.2,
+              1.0
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "stage.to-clock.port",
+      "actorId": "stage",
+      "property": "to-clock.port",
+      "initial": 0.0,
+      "events": [
+        {
+          "operation": "ease",
+          "atNanos": 1900000000,
+          "target": 1.0,
+          "durationNanos": 300000000,
+          "curve": "smootherstep"
+        }
+      ]
+    },
+    {
+      "id": "stage.to-clock.draw",
+      "actorId": "stage",
+      "property": "to-clock.draw",
+      "initial": 0.0,
+      "events": [
+        {
+          "operation": "set",
+          "atNanos": 2200000000,
+          "value": 0.0
+        },
+        {
+          "operation": "ease",
+          "atNanos": 2200000000,
+          "target": 1.0,
+          "durationNanos": 500000000,
+          "curve": {
+            "cubic-bezier": [
+              0.45,
+              0.0,
+              0.2,
+              1.0
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "stage.ask-db.age",
+      "actorId": "stage",
+      "property": "ask-db.age",
+      "initial": -1.0,
+      "events": [
+        {
+          "operation": "set",
+          "atNanos": 2360000000,
+          "value": 0.0
+        },
+        {
+          "operation": "ease",
+          "atNanos": 2360000000,
+          "target": 4.0,
+          "durationNanos": 4000000000,
+          "curve": "linear"
+        }
+      ]
+    },
+    {
+      "id": "stage.ask-db.flight",
+      "actorId": "stage",
+      "property": "ask-db.flight",
+      "initial": 0.7,
+      "events": [
+        {
+          "operation": "set",
+          "atNanos": 2360000000,
+          "value": 0.7
+        }
+      ]
+    },
+    {
+      "id": "stage.ask-logger.age",
+      "actorId": "stage",
+      "property": "ask-logger.age",
+      "initial": -1.0,
+      "events": [
+        {
+          "operation": "set",
+          "atNanos": 2360000000,
+          "value": 0.0
+        },
+        {
+          "operation": "ease",
+          "atNanos": 2360000000,
+          "target": 4.0,
+          "durationNanos": 4000000000,
+          "curve": "linear"
+        }
+      ]
+    },
+    {
+      "id": "stage.ask-logger.flight",
+      "actorId": "stage",
+      "property": "ask-logger.flight",
+      "initial": 0.7,
+      "events": [
+        {
+          "operation": "set",
+          "atNanos": 2360000000,
+          "value": 0.7
+        }
+      ]
+    },
+    {
+      "id": "stage.ask-clock.age",
+      "actorId": "stage",
+      "property": "ask-clock.age",
+      "initial": -1.0,
+      "events": [
+        {
+          "operation": "set",
+          "atNanos": 2360000000,
+          "value": 0.0
+        },
+        {
+          "operation": "ease",
+          "atNanos": 2360000000,
+          "target": 4.0,
+          "durationNanos": 4000000000,
+          "curve": "linear"
+        }
+      ]
+    },
+    {
+      "id": "stage.ask-clock.flight",
+      "actorId": "stage",
+      "property": "ask-clock.flight",
+      "initial": 0.7,
+      "events": [
+        {
+          "operation": "set",
+          "atNanos": 2360000000,
+          "value": 0.7
+        }
+      ]
+    },
+    {
+      "id": "stage.program.pulse",
+      "actorId": "stage",
+      "property": "program.pulse",
+      "initial": 0.0,
+      "events": [
+        {
+          "operation": "set",
+          "atNanos": 3400000000,
+          "value": 0.6
+        },
+        {
+          "operation": "ease",
+          "atNanos": 3400000000,
+          "target": 0.0,
+          "durationNanos": 800000000,
+          "curve": "cubic-out"
+        }
+      ]
+    },
+    {
+      "id": "stage.camera.kick-x",
+      "actorId": "stage",
+      "property": "camera.kick-x",
+      "initial": 0.0,
+      "events": [
+        {
+          "operation": "spring",
+          "atNanos": 3400000000,
+          "target": -0.0,
+          "responseSeconds": 0.048,
+          "dampingRatio": 1.0,
+          "positionThreshold": 0.001,
+          "velocityThreshold": 0.001
+        },
+        {
+          "operation": "spring",
+          "atNanos": 3440000000,
+          "target": 0.0,
+          "responseSeconds": 0.72,
+          "dampingRatio": 0.65,
+          "positionThreshold": 0.001,
+          "velocityThreshold": 0.001
+        }
+      ]
+    },
+    {
+      "id": "stage.camera.kick-y",
+      "actorId": "stage",
+      "property": "camera.kick-y",
+      "initial": 0.0,
+      "events": [
+        {
+          "operation": "spring",
+          "atNanos": 3400000000,
+          "target": 8.0,
+          "responseSeconds": 0.048,
+          "dampingRatio": 1.0,
+          "positionThreshold": 0.001,
+          "velocityThreshold": 0.001
+        },
+        {
+          "operation": "spring",
+          "atNanos": 3440000000,
+          "target": 0.0,
+          "responseSeconds": 0.72,
+          "dampingRatio": 0.65,
+          "positionThreshold": 0.001,
+          "velocityThreshold": 0.001
+        }
+      ]
+    },
+    {
+      "id": "stage.camera.shake",
+      "actorId": "stage",
+      "property": "camera.shake",
+      "initial": 0.0,
+      "events": [
+        {
+          "operation": "set",
+          "atNanos": 3400000000,
+          "value": 0.5
+        },
+        {
+          "operation": "ease",
+          "atNanos": 3400000000,
+          "target": 0.0,
+          "durationNanos": 800000000,
+          "curve": "cubic-out"
+        }
+      ]
+    },
+    {
+      "id": "stage.camera.punch",
+      "actorId": "stage",
+      "property": "camera.punch",
+      "initial": 0.0,
+      "events": [
+        {
+          "operation": "set",
+          "atNanos": 3400000000,
+          "value": 0.011
+        },
+        {
+          "operation": "ease",
+          "atNanos": 3400000000,
+          "target": 0.0,
+          "durationNanos": 800000000,
+          "curve": "cubic-out"
+        }
+      ]
+    }
+  ],
+  "stateChannels": [],
+  "cues": [],
+  "media": [
+    {
+      "id": "narration-layers",
+      "path": "media/31a523c417fd9524.mp3",
+      "kind": "audio",
+      "role": "script",
+      "sourceStartNanos": 0,
+      "sourceEndNanos": 7879000000,
+      "timelineStartNanos": 400000000,
+      "timelineEndNanos": 8279000000,
+      "gainDb": 0.0
+    }
+  ]
+}

@@ -218,15 +218,15 @@
       ]
     },
     "layers": {
-      "key": "a4923a2dc0e61ea0",
-      "file": "media/a4923a2dc0e61ea0.mp3",
+      "key": "31a523c417fd9524",
+      "file": "media/31a523c417fd9524.mp3",
       "durationNanos": 7879000000,
       "spec": {
         "align": "estimate",
         "backend": "pocket",
         "format": "wav",
         "kind": "speech",
-        "lines": [{"text": "Dependencies become a value. A layer describes what a program needs, and you supply it at the edge, which makes tests cheap and mocks honest.", "voice": "alba"}],
+        "lines": [{"text": "Dependencies become a value. A layer declares what a program needs, and you supply it at the edge, which makes tests cheap and mocks honest.", "voice": "alba"}],
         "post": "loudnorm=I=-16:TP=-1.5:LRA=11|mp3=48000:mono:160k",
         "route": "speech"
       },
@@ -237,7 +237,7 @@
         ["value.", 1.35, 1.69],
         ["A", 1.75, 2.09],
         ["layer", 2.15, 2.49],
-        ["describes", 2.55, 2.89],
+        ["declares", 2.55, 2.89],
         ["what", 2.95, 3.29],
         ["a", 3.35, 3.69],
         ["program", 3.75, 4.09],
