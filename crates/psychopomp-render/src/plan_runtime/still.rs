@@ -97,7 +97,7 @@ impl Loaded {
         output: &Path,
         window: TimeRange,
     ) -> Result<()> {
-        self.render_video_with(renderer, output, window, false)
+        self.render_video_with(renderer, output, window, false, None)
     }
 
     /// Encode `window` to `output`; with `draft`, each frame takes one instant
@@ -108,10 +108,11 @@ impl Loaded {
         output: &Path,
         window: TimeRange,
         draft: bool,
+        samples: Option<u32>,
     ) -> Result<()> {
         match self {
-            Self::Plan(plan) => delivery::render_video_with(plan, renderer, output, window, draft),
-            Self::Reel(reel) => delivery::render_reel_with(reel, renderer, output, window, draft),
+            Self::Plan(plan) => delivery::render_video_with(plan, renderer, output, window, draft, samples),
+            Self::Reel(reel) => delivery::render_reel_with(reel, renderer, output, window, draft, samples),
         }
     }
 

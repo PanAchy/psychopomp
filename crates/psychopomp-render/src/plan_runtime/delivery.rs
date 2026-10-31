@@ -16,7 +16,7 @@ pub(super) fn render_video(
     output: &Path,
     window: TimeRange,
 ) -> Result<()> {
-    render_video_with(prepared, renderer, output, window, false)
+    render_video_with(prepared, renderer, output, window, false, None)
 }
 
 pub(super) fn render_video_with(
@@ -25,6 +25,7 @@ pub(super) fn render_video_with(
     output: &Path,
     window: TimeRange,
     draft: bool,
+    samples: Option<u32>,
 ) -> Result<()> {
     renderer.set_file_name(prepared.file_name());
     encode_exposures(
@@ -37,7 +38,8 @@ pub(super) fn render_video_with(
             if draft {
                 1
             } else {
-                prepared.temporal_samples(center)
+                let full = prepared.temporal_samples(center);
+                samples.map_or(full, |cap| full.min(cap))
             }
         },
         |time| prepared.visual_sample_key(time),
@@ -53,6 +55,7 @@ pub(super) fn render_reel_with(
     output: &Path,
     window: TimeRange,
     draft: bool,
+    samples: Option<u32>,
 ) -> Result<()> {
     encode_exposures(
         renderer,
@@ -64,7 +67,8 @@ pub(super) fn render_reel_with(
             if draft {
                 1
             } else {
-                prepared.temporal_samples(center)
+                let full = prepared.temporal_samples(center);
+                samples.map_or(full, |cap| full.min(cap))
             }
         },
         |time| prepared.visual_sample_key(time),

@@ -103,7 +103,7 @@ const CHECK_USAGE: &str = "psychopomp plan check <plan-or-reel.json> [range] [--
 const AUDIO_USAGE: &str = "psychopomp plan audio <plan-or-reel.json> [range] [--at TIMES]";
 const ONION_USAGE: &str = "psychopomp plan onion <plan-or-reel.json> <range | a,b,c | from:to:step> [output.png] [--shutter] [--theme NAME]";
 const SNAPSHOT_USAGE: &str = "psychopomp plan snapshot <plan-or-reel.json> <a,b,c | from:to:step> <dir> [--compare] [--shutter] [--theme NAME]";
-const RENDER_USAGE: &str = "psychopomp plan render <plan-or-reel.json> [output] [--cue ID | --range SPEC] [--theme NAME] [--draft]";
+const RENDER_USAGE: &str = "psychopomp plan render <plan-or-reel.json> [output] [--cue ID | --range SPEC] [--theme NAME] [--draft | --samples N]";
 const PRESENT_USAGE: &str = "psychopomp plan present <plan.json> [--theme NAME] [--speed 1|0.5|0.25|0.1] [--debug] [--reduced-motion] [--full-quality] [--fps FPS] [--benchmark | --benchmark-gpu]";
 
 fn usage() -> String {
@@ -529,6 +529,13 @@ fn plan_audio_placements(plan: &ScenePlan, base: &Path) -> Vec<MediaPlacement> {
 
 fn render_command(arguments: &[String], theme: Theme) -> Result<()> {
     let (arguments, [draft]) = flags(arguments, &["--draft"]);
+    let (arguments, samples) = take_option(&arguments, &["--samples"])?;
+    let samples = samples
+        .map(|value| value.parse::<u32>().context("--samples takes a positive integer"))
+        .transpose()?;
+    if samples == Some(0) {
+        bail!("--samples must be at least 1");
+    }
     let Some(path) = arguments.first() else {
         bail!("plan render requires a plan path");
     };
@@ -573,7 +580,7 @@ fn render_command(arguments: &[String], theme: Theme) -> Result<()> {
     let _slot = render_queue::wait()?;
     let base = path.parent().unwrap_or_else(|| Path::new("."));
     let (loaded, mut renderer) = pollster::block_on(still::Loaded::prepare(file, base, theme))?;
-    loaded.render_video_with(&mut renderer, &output, window, draft)
+    loaded.render_video_with(&mut renderer, &output, window, draft, samples)
 }
 
 fn create_output_directory(output: &Path) -> Result<()> {
