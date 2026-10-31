@@ -16,7 +16,7 @@ pub(super) fn render_video(
     output: &Path,
     window: TimeRange,
 ) -> Result<()> {
-    render_video_with(prepared, renderer, output, window, false, None)
+    render_video_with(prepared, renderer, output, window, None)
 }
 
 pub(super) fn render_video_with(
@@ -24,7 +24,6 @@ pub(super) fn render_video_with(
     renderer: &mut HeadlessRenderer,
     output: &Path,
     window: TimeRange,
-    draft: bool,
     samples: Option<u32>,
 ) -> Result<()> {
     renderer.set_file_name(prepared.file_name());
@@ -35,12 +34,8 @@ pub(super) fn render_video_with(
         &prepared.media,
         window,
         |center| {
-            if draft {
-                1
-            } else {
-                let full = prepared.temporal_samples(center);
-                samples.map_or(full, |cap| full.min(cap))
-            }
+            let full = prepared.temporal_samples(center);
+            samples.map_or(1, |cap| full.min(cap))
         },
         |time| prepared.visual_sample_key(time),
         |renderer, exposure| prepared.render_exposure(renderer, exposure),
@@ -54,7 +49,6 @@ pub(super) fn render_reel_with(
     renderer: &mut HeadlessRenderer,
     output: &Path,
     window: TimeRange,
-    draft: bool,
     samples: Option<u32>,
 ) -> Result<()> {
     encode_exposures(
@@ -64,12 +58,8 @@ pub(super) fn render_reel_with(
         prepared.media(),
         window,
         |center| {
-            if draft {
-                1
-            } else {
-                let full = prepared.temporal_samples(center);
-                samples.map_or(full, |cap| full.min(cap))
-            }
+            let full = prepared.temporal_samples(center);
+            samples.map_or(1, |cap| full.min(cap))
         },
         |time| prepared.visual_sample_key(time),
         |renderer, exposure| prepared.render_exposure(renderer, exposure),
