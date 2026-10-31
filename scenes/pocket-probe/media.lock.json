@@ -2,29 +2,35 @@
   "version": 1,
   "resources": {
     "probe": {
-      "key": "1b479195636e21cf",
-      "file": "media/1b479195636e21cf.mp3",
-      "durationNanos": 3319000000,
+      "key": "c03bb629d54e572f",
+      "file": "media/c03bb629d54e572f.mp3",
+      "durationNanos": 5079000000,
       "spec": {
         "align": "estimate",
         "backend": "pocket",
         "format": "wav",
         "kind": "speech",
-        "lines": [{"text": "This line is spoken by the local Pocket TTS server.", "voice": "alba"}],
+        "lines": [{"text": "A card drifts into place, a wire draws on, and a packet flies to the server.", "voice": "alba"}],
         "post": "loudnorm=I=-16:TP=-1.5:LRA=11|mp3=48000:mono:160k",
         "route": "speech"
       },
       "words": [
-        ["This", 0.15, 0.49],
-        ["line", 0.55, 0.89],
-        ["is", 0.95, 1.29],
-        ["spoken", 1.35, 1.69],
-        ["by", 1.75, 2.09],
-        ["the", 2.15, 2.49],
-        ["local", 2.55, 2.89],
-        ["Pocket", 2.95, 3.29],
-        ["TTS", 3.319, 3.319],
-        ["server.", 3.319, 3.319]
+        ["A", 0.15, 0.49],
+        ["card", 0.55, 0.89],
+        ["drifts", 0.95, 1.29],
+        ["into", 1.35, 1.69],
+        ["place,", 1.75, 2.09],
+        ["a", 2.15, 2.49],
+        ["wire", 2.55, 2.89],
+        ["draws", 2.95, 3.29],
+        ["on,", 3.35, 3.69],
+        ["and", 3.75, 4.09],
+        ["a", 4.15, 4.49],
+        ["packet", 4.55, 4.89],
+        ["flies", 4.95, 5.079],
+        ["to", 5.079, 5.079],
+        ["the", 5.079, 5.079],
+        ["server.", 5.079, 5.079]
       ]
     }
   }

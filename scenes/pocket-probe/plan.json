@@ -1,0 +1,371 @@
+{
+  "version": 2,
+  "id": "pocket-probe",
+  "durationNanos": 6000000000,
+  "actors": [
+    {
+      "id": "stage",
+      "recipe": "stage",
+      "data": {
+        "elements": [
+          {
+            "at": [
+              560.0,
+              540.0,
+              0.0
+            ],
+            "id": "client",
+            "kind": "card",
+            "size": [
+              300.0,
+              110.0
+            ],
+            "title": "client"
+          },
+          {
+            "at": [
+              1360.0,
+              540.0,
+              0.0
+            ],
+            "id": "server",
+            "kind": "orb",
+            "points": 720,
+            "radius": 140.0,
+            "tone": "accent"
+          },
+          {
+            "bend": 0.0,
+            "from": "client",
+            "id": "link",
+            "kind": "beam",
+            "to": "server"
+          },
+          {
+            "beam": "link",
+            "id": "hello",
+            "kind": "packet",
+            "label": "GET /hello"
+          }
+        ],
+        "post": {
+          "backdrop": 0.3499999940395355,
+          "bloom": 0.550000011920929,
+          "grain": 0.03500000014901161,
+          "vignette": 0.4000000059604645
+        }
+      }
+    }
+  ],
+  "semanticTargets": [],
+  "continuousChannels": [
+    {
+      "id": "stage.client.scale",
+      "actorId": "stage",
+      "property": "client.scale",
+      "initial": 1.035,
+      "events": [
+        {
+          "operation": "set",
+          "atNanos": 0,
+          "value": 1.035
+        },
+        {
+          "operation": "spring",
+          "atNanos": 0,
+          "target": 1.0,
+          "responseSeconds": 0.72,
+          "dampingRatio": 0.88,
+          "positionThreshold": 0.001,
+          "velocityThreshold": 0.001
+        }
+      ]
+    },
+    {
+      "id": "stage.client.y",
+      "actorId": "stage",
+      "property": "client.y",
+      "initial": 16.0,
+      "events": [
+        {
+          "operation": "set",
+          "atNanos": 0,
+          "value": 16.0
+        },
+        {
+          "operation": "spring",
+          "atNanos": 0,
+          "target": 0.0,
+          "responseSeconds": 0.66,
+          "dampingRatio": 0.84000003,
+          "positionThreshold": 0.001,
+          "velocityThreshold": 0.001
+        }
+      ]
+    },
+    {
+      "id": "stage.client.content",
+      "actorId": "stage",
+      "property": "client.content",
+      "initial": 0.0,
+      "events": [
+        {
+          "operation": "set",
+          "atNanos": 0,
+          "value": 0.0
+        },
+        {
+          "operation": "spring",
+          "atNanos": 65000000,
+          "target": 1.0,
+          "responseSeconds": 0.43200004,
+          "dampingRatio": 1.0,
+          "positionThreshold": 0.001,
+          "velocityThreshold": 0.001
+        }
+      ]
+    },
+    {
+      "id": "stage.client.opacity",
+      "actorId": "stage",
+      "property": "client.opacity",
+      "initial": 0.0,
+      "events": [
+        {
+          "operation": "set",
+          "atNanos": 0,
+          "value": 0.0
+        },
+        {
+          "operation": "ease",
+          "atNanos": 0,
+          "target": 1.0,
+          "durationNanos": 180000000,
+          "curve": "smootherstep"
+        }
+      ]
+    },
+    {
+      "id": "stage.client.blur",
+      "actorId": "stage",
+      "property": "client.blur",
+      "initial": 3.0,
+      "events": [
+        {
+          "operation": "set",
+          "atNanos": 0,
+          "value": 3.0
+        },
+        {
+          "operation": "ease",
+          "atNanos": 0,
+          "target": 0.0,
+          "durationNanos": 300000000,
+          "curve": "smootherstep"
+        }
+      ]
+    },
+    {
+      "id": "stage.link.port",
+      "actorId": "stage",
+      "property": "link.port",
+      "initial": 0.0,
+      "events": [
+        {
+          "operation": "ease",
+          "atNanos": 500000000,
+          "target": 1.0,
+          "durationNanos": 300000000,
+          "curve": "smootherstep"
+        }
+      ]
+    },
+    {
+      "id": "stage.link.draw",
+      "actorId": "stage",
+      "property": "link.draw",
+      "initial": 0.0,
+      "events": [
+        {
+          "operation": "set",
+          "atNanos": 800000000,
+          "value": 0.0
+        },
+        {
+          "operation": "ease",
+          "atNanos": 800000000,
+          "target": 1.0,
+          "durationNanos": 600000000,
+          "curve": {
+            "cubic-bezier": [
+              0.45,
+              0.0,
+              0.2,
+              1.0
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "stage.hello.age",
+      "actorId": "stage",
+      "property": "hello.age",
+      "initial": -1.0,
+      "events": [
+        {
+          "operation": "set",
+          "atNanos": 1560000000,
+          "value": 0.0
+        },
+        {
+          "operation": "ease",
+          "atNanos": 1560000000,
+          "target": 4.0,
+          "durationNanos": 4000000000,
+          "curve": "linear"
+        }
+      ]
+    },
+    {
+      "id": "stage.hello.flight",
+      "actorId": "stage",
+      "property": "hello.flight",
+      "initial": 0.8,
+      "events": [
+        {
+          "operation": "set",
+          "atNanos": 1560000000,
+          "value": 0.8
+        }
+      ]
+    },
+    {
+      "id": "stage.server.pulse",
+      "actorId": "stage",
+      "property": "server.pulse",
+      "initial": 0.0,
+      "events": [
+        {
+          "operation": "set",
+          "atNanos": 2700000000,
+          "value": 0.6
+        },
+        {
+          "operation": "ease",
+          "atNanos": 2700000000,
+          "target": 0.0,
+          "durationNanos": 800000000,
+          "curve": "cubic-out"
+        }
+      ]
+    },
+    {
+      "id": "stage.camera.kick-x",
+      "actorId": "stage",
+      "property": "camera.kick-x",
+      "initial": 0.0,
+      "events": [
+        {
+          "operation": "spring",
+          "atNanos": 2700000000,
+          "target": -9.6,
+          "responseSeconds": 0.048,
+          "dampingRatio": 1.0,
+          "positionThreshold": 0.001,
+          "velocityThreshold": 0.001
+        },
+        {
+          "operation": "spring",
+          "atNanos": 2740000000,
+          "target": 0.0,
+          "responseSeconds": 0.72,
+          "dampingRatio": 0.65,
+          "positionThreshold": 0.001,
+          "velocityThreshold": 0.001
+        }
+      ]
+    },
+    {
+      "id": "stage.camera.kick-y",
+      "actorId": "stage",
+      "property": "camera.kick-y",
+      "initial": 0.0,
+      "events": [
+        {
+          "operation": "spring",
+          "atNanos": 2700000000,
+          "target": -0.0,
+          "responseSeconds": 0.048,
+          "dampingRatio": 1.0,
+          "positionThreshold": 0.001,
+          "velocityThreshold": 0.001
+        },
+        {
+          "operation": "spring",
+          "atNanos": 2740000000,
+          "target": 0.0,
+          "responseSeconds": 0.72,
+          "dampingRatio": 0.65,
+          "positionThreshold": 0.001,
+          "velocityThreshold": 0.001
+        }
+      ]
+    },
+    {
+      "id": "stage.camera.shake",
+      "actorId": "stage",
+      "property": "camera.shake",
+      "initial": 0.0,
+      "events": [
+        {
+          "operation": "set",
+          "atNanos": 2700000000,
+          "value": 0.6
+        },
+        {
+          "operation": "ease",
+          "atNanos": 2700000000,
+          "target": 0.0,
+          "durationNanos": 800000000,
+          "curve": "cubic-out"
+        }
+      ]
+    },
+    {
+      "id": "stage.camera.punch",
+      "actorId": "stage",
+      "property": "camera.punch",
+      "initial": 0.0,
+      "events": [
+        {
+          "operation": "set",
+          "atNanos": 2700000000,
+          "value": 0.013200001
+        },
+        {
+          "operation": "ease",
+          "atNanos": 2700000000,
+          "target": 0.0,
+          "durationNanos": 800000000,
+          "curve": "cubic-out"
+        }
+      ]
+    }
+  ],
+  "stateChannels": [],
+  "cues": [],
+  "media": [
+    {
+      "id": "narration-probe",
+      "path": "media/c03bb629d54e572f.mp3",
+      "kind": "audio",
+      "role": "script",
+      "sourceStartNanos": 0,
+      "sourceEndNanos": 5079000000,
+      "timelineStartNanos": 250000000,
+      "timelineEndNanos": 5329000000,
+      "gainDb": 0.0
+    }
+  ]
+}

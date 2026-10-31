@@ -2802,7 +2802,9 @@ name = "psychopomp-pocket-probe"
 version = "0.1.0"
 dependencies = [
  "anyhow",
+ "psychopomp",
  "psychopomp-media",
+ "serde_json",
 ]
 
 [[package]]
