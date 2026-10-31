@@ -86,9 +86,9 @@ impl FfmpegEncoder {
                 "-threads",
                 "4",
                 "-preset",
-                "medium",
+                "ultrafast",
                 "-crf",
-                "17",
+                "23",
                 // Film grain and bloom are expensive noise to encode; cap the rate so
                 // a grainy minute stays shareable while clean frames keep CRF quality.
                 "-maxrate",

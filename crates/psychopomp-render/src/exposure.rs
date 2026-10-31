@@ -14,10 +14,13 @@ use crate::{
     render::HeadlessRenderer,
 };
 
-/// A deliberately low default resolution for weak GPUs.
-pub(crate) const WIDTH: u32 = 960;
-pub(crate) const HEIGHT: u32 = 540;
-const FPS: u32 = 60;
+/// The authoring space, and the framebuffer. They are the same space: scene
+/// coordinates, primitive radii, and SDF math are all in these pixels, so
+/// changing this crops rather than scales. Resolution is not a safe cost knob
+/// until the fragment stage is scale-aware.
+pub(crate) const WIDTH: u32 = 1920;
+pub(crate) const HEIGHT: u32 = 1080;
+const FPS: u32 = 30;
 const TEMPORAL_SAMPLES: u32 = 8;
 const ENTRANCE_TEMPORAL_SAMPLES: u32 = 16;
 const SHUTTER_ANGLE: f32 = 180.0;
