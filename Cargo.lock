@@ -2798,6 +2798,14 @@ dependencies = [
 ]
 
 [[package]]
+name = "psychopomp-pocket-probe"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "psychopomp-media",
+]
+
+[[package]]
 name = "psychopomp-pr-50231"
 version = "0.1.0"
 dependencies = [

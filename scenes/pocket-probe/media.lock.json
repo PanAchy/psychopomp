@@ -1,0 +1,31 @@
+{
+  "version": 1,
+  "resources": {
+    "probe": {
+      "key": "1b479195636e21cf",
+      "file": "media/1b479195636e21cf.mp3",
+      "durationNanos": 3319000000,
+      "spec": {
+        "align": "estimate",
+        "backend": "pocket",
+        "format": "wav",
+        "kind": "speech",
+        "lines": [{"text": "This line is spoken by the local Pocket TTS server.", "voice": "alba"}],
+        "post": "loudnorm=I=-16:TP=-1.5:LRA=11|mp3=48000:mono:160k",
+        "route": "speech"
+      },
+      "words": [
+        ["This", 0.15, 0.49],
+        ["line", 0.55, 0.89],
+        ["is", 0.95, 1.29],
+        ["spoken", 1.35, 1.69],
+        ["by", 1.75, 2.09],
+        ["the", 2.15, 2.49],
+        ["local", 2.55, 2.89],
+        ["Pocket", 2.95, 3.29],
+        ["TTS", 3.319, 3.319],
+        ["server.", 3.319, 3.319]
+      ]
+    }
+  }
+}
