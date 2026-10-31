@@ -7,6 +7,7 @@ use std::collections::HashMap;
 use std::f32::consts::{FRAC_PI_2, PI, TAU};
 
 use super::*;
+use crate::exposure::{DESIGN_HEIGHT, DESIGN_WIDTH};
 use crate::footage::StageFootageFrame;
 use psychopomp::{
     callout::CalloutSide,
@@ -709,7 +710,12 @@ impl HeadlessRenderer {
             &globals,
             0,
             bytemuck::bytes_of(&Globals {
-                viewport: [width as f32, height as f32, atlas_size[0], atlas_size[1]],
+                viewport: [
+                    DESIGN_WIDTH as f32,
+                    DESIGN_HEIGHT as f32,
+                    atlas_size[0],
+                    atlas_size[1],
+                ],
             }),
         );
         let orbs = plan
@@ -963,7 +969,8 @@ impl HeadlessRenderer {
         footage: impl Fn(f64) -> Result<Vec<StageFootageFrame>>,
     ) -> Result<Vec<u8>> {
         let look = Look::new(self.theme);
-        let size = vec2(self.spec.width as f32, self.spec.height as f32);
+        // Primitives are authored in design pixels; the target may be smaller.
+        let size = vec2(DESIGN_WIDTH as f32, DESIGN_HEIGHT as f32);
         let mean = exposure
             .iter()
             .map(|(time, weight)| time * f64::from(*weight))

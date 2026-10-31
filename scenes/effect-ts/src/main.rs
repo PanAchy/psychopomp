@@ -12,7 +12,9 @@ use std::{fs, path::PathBuf};
 use anyhow::Result;
 use psychopomp::{
     author::{PlanBuilder, seconds},
+    caption::{CaptionActor, CaptionAlign, CaptionPlan, CaptionSpanPlan},
     editor::diff::{Diff, add, keep, remove},
+    tone::Tone,
     stage::{StageActor, StageElement},
 };
 use psychopomp_media::{Media, Voice};
@@ -66,6 +68,15 @@ fn code_film(throws: &psychopomp_media::Audio, typed: &psychopomp_media::Audio) 
     let step_times = [throws_spoken.at("throws"), typed_spoken.at("signature")];
     diff.declare(&mut scene, &step_times, seconds(0.9), true)?;
 
+    subtitle(&mut scene, "sub-throws", THROWS, start, throws.duration());
+    subtitle(
+        &mut scene,
+        "sub-typed",
+        TYPED,
+        second,
+        typed.duration(),
+    );
+
     fs::create_dir_all("target")?;
     write_plan(scene, "target/effect-ts-code.json")?;
     println!("code film {:.1}s", duration as f64 / 1e9);
@@ -79,6 +90,7 @@ fn diagram_film(layers: &psychopomp_media::Audio) -> Result<()> {
 
     let mut scene = PlanBuilder::new("effect-ts-diagram", duration);
     layers.place(&mut scene, start);
+    subtitle(&mut scene, "sub-layers", LAYERS, start, layers.duration());
 
     let elements = vec![
         StageElement::card("db", [420.0, 790.0, 0.0], [300.0, 110.0], "Database"),
@@ -121,6 +133,46 @@ fn diagram_film(layers: &psychopomp_media::Audio) -> Result<()> {
     write_plan(scene, "target/effect-ts-diagram.json")?;
     println!("diagram film {:.1}s", duration as f64 / 1e9);
     Ok(())
+}
+
+/// A subtitle in the lower third, wrapped to fit the frame, shown for its line.
+fn subtitle(scene: &mut PlanBuilder, id: &str, text: &'static str, at: u64, for_nanos: u64) {
+    let mut plan = CaptionPlan::line(
+        [960.0, 980.0],
+        28.0,
+        vec![CaptionSpanPlan::new("", Tone::Muted)],
+    )
+    .aligned(CaptionAlign::Center);
+    plan.lines = wrap(text, 62)
+        .into_iter()
+        .map(|line| vec![CaptionSpanPlan::new(line, Tone::Muted)])
+        .collect();
+    match CaptionActor::declare(scene, id, &plan) {
+        Ok(mut caption) => {
+            caption.show(scene, at);
+            caption.hide(scene, at + for_nanos);
+        }
+        Err(error) => eprintln!("caption {id} rejected: {error}"),
+    }
+}
+
+/// Break `text` into lines of at most `width` characters on word boundaries.
+fn wrap(text: &'static str, width: usize) -> Vec<String> {
+    let mut lines = Vec::new();
+    let mut current = String::new();
+    for word in text.split_whitespace() {
+        if !current.is_empty() && current.chars().count() + 1 + word.chars().count() > width {
+            lines.push(std::mem::take(&mut current));
+        }
+        if !current.is_empty() {
+            current.push(' ');
+        }
+        current.push_str(word);
+    }
+    if !current.is_empty() {
+        lines.push(current);
+    }
+    lines
 }
 
 fn write_plan(scene: PlanBuilder, path: &str) -> Result<()> {

@@ -2,3 +2,6 @@
 /output
 .env
 .DS_Store
+
+# Generated plans (media paths are relative to the scene, regenerated per run)
+scenes/*/plan*.json

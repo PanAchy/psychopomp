@@ -19,6 +19,15 @@ use super::{
     },
 };
 
+
+/// Caption geometry is authored in design pixels; the framebuffer may be smaller.
+fn in_pixels(plan: &CaptionPlan, scale: f32) -> CaptionPlan {
+    let mut plan = plan.clone();
+    plan.origin = [plan.origin[0] * scale, plan.origin[1] * scale];
+    plan.size *= scale;
+    plan
+}
+
 impl HeadlessRenderer {
     pub(crate) fn composite_caption(
         &mut self,
@@ -40,7 +49,12 @@ impl HeadlessRenderer {
         if opacity <= 0.02 || plan.lines.is_empty() {
             return None;
         }
-        let origin = [origin[0] + sample("x", 0.0), origin[1] + sample("y", 0.0)];
+        let scale = crate::exposure::SCALE;
+        let origin = [
+            (origin[0] + sample("x", 0.0)) * scale,
+            (origin[1] + sample("y", 0.0)) * scale,
+        ];
+        let plan = &in_pixels(plan, scale);
         let spec = PlainTextSpec {
             font_size: plan.size,
             color: [0, 0, 0],
@@ -104,7 +118,12 @@ impl HeadlessRenderer {
         if opacity <= 0.001 {
             return;
         }
-        let origin = [origin[0] + sample("x", 0.0), origin[1] + sample("y", 0.0)];
+        let scale = crate::exposure::SCALE;
+        let origin = [
+            (origin[0] + sample("x", 0.0)) * scale,
+            (origin[1] + sample("y", 0.0)) * scale,
+        ];
+        let plan = &in_pixels(plan, scale);
         let typed = sample("typed", 1.0).clamp(0.0, 1.0);
         let caret = sample("caret", 0.0).clamp(0.0, 1.0);
         let canvas = [self.spec.width, self.spec.height];

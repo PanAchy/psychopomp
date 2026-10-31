@@ -14,12 +14,15 @@ use crate::{
     render::HeadlessRenderer,
 };
 
-/// The authoring space, and the framebuffer. They are the same space: scene
-/// coordinates, primitive radii, and SDF math are all in these pixels, so
-/// changing this crops rather than scales. Resolution is not a safe cost knob
-/// until the fragment stage is scale-aware.
-pub(crate) const WIDTH: u32 = 1920;
-pub(crate) const HEIGHT: u32 = 1080;
+/// The authoring space: scene coordinates, primitive radii, and SDF math are
+/// all in these pixels. Primitives are projected with this size, so a smaller
+/// framebuffer samples the same picture at fewer points instead of cropping it.
+pub(crate) const DESIGN_WIDTH: u32 = 1920;
+pub(crate) const DESIGN_HEIGHT: u32 = 1080;
+/// Framebuffer pixels per design pixel. 0.5 renders 960x540.
+pub(crate) const SCALE: f32 = 0.5;
+pub(crate) const WIDTH: u32 = (DESIGN_WIDTH as f32 * SCALE) as u32;
+pub(crate) const HEIGHT: u32 = (DESIGN_HEIGHT as f32 * SCALE) as u32;
 const FPS: u32 = 30;
 const TEMPORAL_SAMPLES: u32 = 8;
 const ENTRANCE_TEMPORAL_SAMPLES: u32 = 16;
@@ -259,10 +262,11 @@ impl Region {
     /// The frame pixels any of `bounds` touches; empty for none.
     pub(crate) fn covering(bounds: impl IntoIterator<Item = Box2>) -> Self {
         let frame = vec2(WIDTH as f32, HEIGHT as f32);
+        // Bounds arrive in design pixels; the frame is in framebuffer pixels.
         let mut by_row = vec![Vec::<Range<usize>>::new(); HEIGHT as usize];
         for bounds in bounds {
-            let min = bounds.min.floor().clamp(Vec2::ZERO, frame);
-            let max = bounds.max.ceil().clamp(min, frame);
+            let min = (bounds.min * SCALE).floor().clamp(Vec2::ZERO, frame);
+            let max = (bounds.max * SCALE).ceil().clamp(min, frame);
             let x = min.x as usize..max.x as usize;
             if x.is_empty() {
                 continue;
