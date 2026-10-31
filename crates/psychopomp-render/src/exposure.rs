@@ -14,8 +14,9 @@ use crate::{
     render::HeadlessRenderer,
 };
 
-pub(crate) const WIDTH: u32 = 1920;
-pub(crate) const HEIGHT: u32 = 1080;
+/// A deliberately low default resolution for weak GPUs.
+pub(crate) const WIDTH: u32 = 960;
+pub(crate) const HEIGHT: u32 = 540;
 const FPS: u32 = 60;
 const TEMPORAL_SAMPLES: u32 = 8;
 const ENTRANCE_TEMPORAL_SAMPLES: u32 = 16;
